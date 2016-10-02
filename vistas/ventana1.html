@@ -1,18 +1,485 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="archivo.js"></script>
-    </head>
-    <body>
-    <h3>Datos</h3>
-    <div id="demo">
-        <!--Aca se van a presentar los datos guardados-->
-    </div>
-    <script>
-        loadDoc()
-    </script>
-    </body>
-</html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+        "http://www.w3.org/TR/2000/REC-xhtml1-20000126/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es" lang="es">
+ <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+	
+
+  <title>Estadística para todos</title>
+
+
+
+  <link rel="icon" href="../../favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="../../css/a/style.css" media="screen,projection" title="azul" />
+  <link rel="stylesheet" type="text/css" href="../../css/combinatoria.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="../../css/print.css" media="print" />
+
+
+
+
+<SCRIPT type=text/javascript>var initFactorial = "init('permutaciones('+this.form.numero.value+')')";var initVariaciones = "init('variaciones('+this.form.numelementos.value+','+ this.form.numorden.value  + ')')";var initVarRep = "init('variacionesRep('+this.form.numelementos.value+','+ this.form.numorden.value + ')')";
+var initPerRep = "init('permutacionesRep('+this.form.numelementos.value+',\"'+ this.form.numorden.value.toString() + '\")')";
+var initCombinaciones = "init('combinaciones('+this.form.numelementos.value+','+ this.form.numorden.value + ')')";var initComRep = "init('combinacionesRep('+this.form.numelementos.value+','+ this.form.numorden.value + ')')";
+var f=1;
+function factorial(i,p){f *= i;if (i <p){factorial(i+1,p);}}function init(funcion){f = 1;eval(funcion);}function permutaciones(p){factorial(1,p);var texto = "<b>" + p + "</b>! =  <b>" + f + "</b>";document.getElementById('factorial').innerHTML = texto;}
+function variaciones(p,i){factorial(p-i+1,p);var texto = "<b><i>V<sub>"+p+","+i+"</sub></i> = "+ f + "</b>";document.getElementById('variaciones').innerHTML = texto;}function variacionesRep(m,n){var texto = "<b><i>VR<sub>"+m+","+n+"</sub></i> = "+	Math.pow(m,n) + "</b>";
+document.getElementById('variacionesrepeticion').innerHTML = texto;}
+function permutacionesRep(m,l){var arrNumRep = l.split(",");var sumatorio = 0;for (i = 0; i < arrNumRep.length ; i++){sumatorio += parseInt(arrNumRep[i]);}var mensajeError = "Imposible realizar el cálculo.\na,b,c,...\nNO SUMAN\nn";if(sumatorio != m) alert(mensajeError);factorial(1,m);var divisor = 1;var dividendo = f;
+for (i = 0; i < arrNumRep.length ; i++){f=1;factorial (1,parseInt(arrNumRep[i]));divisor *= f ;}var texto = "<b><i>PR<sub>"+m+"</sub><sup>"+l+"</sup></i> = "+ dividendo/divisor + "</b>"; document.getElementById('permutacionesrepeticion').innerHTML = texto;}
+function combinaciones(p,i){factorial(p-i+1,p);var dividendo = f;f=1;factorial(1,i);var divisor = f;var texto = "<b><i>C<sub>"+p+","+i+"</sub></i> = " +	dividendo/divisor + "</b>";document.getElementById('combinaciones').innerHTML = texto;}
+function combinacionesRep(p,i){factorial(p,p+i-1);var dividendo = f;f=1;factorial(1,i);var divisor = f;var texto = "<b><i>CR<sub>"+p+","+i+"</sub></i> = " +	dividendo/divisor + "</b>";document.getElementById('combinacionesrepeticion').innerHTML = texto;}
+
+
+function mostrarFormula($codigo){
+var ventanaCodigo = window.open('','Ventana','width=550,height=400');
+$codigo = unescape($codigo);
+with (ventanaCodigo.document){
+open();
+writeln("<html><body bgcolor=\"#f7dd86\">");
+writeln("<center><h4>EZMATH fórmula:<br><font color=\"#ff0000\">" + $codigo + "<\/font><\/h4><\/center>");
+writeln("<embed type=text/ezmath");
+writeln("codebase=http://www.w3.org/People/Raggett/EzMath");
+writeln("align=center");
+writeln("width= 520");
+writeln("height=150");
+writeln("fontsize=small");
+writeln("color=#000000");
+writeln("bgcolor=#f7dd86");
+writeln("alt='"+ $codigo + "'");
+writeln("<br><br>");
+writeln("<center><a href='javascript:window.close()'><b>Cerrar ventana<\/b><\/a><\/center>");
+writeln("<br>");
+writeln("<\/body><\/html>");
+close();
+}
+}
+function factoria(p)
+{
+f=1;
+for ( i=1 ; i <= p ; i++)
+{
+f *= i;
+}
+return f;
+}
+function combinacione(m,n)
+{
+if(n<=m){
+var dividendo1 = factoria(m);
+var divisor1 = factoria(m-n);
+var divisor = factoria(n);
+var dividendo = dividendo1/divisor1;
+var combinacion = Math.round(dividendo/divisor);
+return combinacion;
+}else return;
+}
+
+function bNewton(e,rad)
+{
+var e = parseInt(e);
+for (i=0;i<rad.length;i++){
+if(rad[i].checked) neg = rad[i].value;
+}
+if(neg == 0)
+{
+var texto = "(<b>a + b</b>)<sup>" + e + "</sup> = ";
+}
+else
+{
+var texto = "(<b>a - b</b>)<sup>" + e + "</sup> = ";
+}
+var valor = 0;
+for (m = e , n = 0; m > e, n<=e; m--,n++)
+{
+if (neg == 1 && Math.pow(-1,n) == -1) signo = "-";
+else signo = "+";
+valor =  combinacione(e,n);
+switch (n){
+case 0:
+texto +=  "<b>a<sup>" + m + "</sup></b>";
+break;
+case 1:
+texto += signo + " " + valor + "<b>a<sup>" + m + "</sup>b</b>";
+break;
+case (e-1):
+texto += signo + " " + valor + "<b>ab<sup>" + n + "</sup></b>";
+break;
+case (e):
+texto += signo + " <b>b<sup>" + n + "</sup></b>";
+break;
+default:
+texto += signo + " " + valor + "<b>a<sup>" + m + "</sup>b<sup>" + n + "</sup></b>";
+break;
+}
+}
+document.getElementById('binomio').innerHTML = texto;
+}
+
+
+
+
+</SCRIPT>
+
+
+
+
+
+
+
+
+
+
+  <!--[if lte IE 6]>
+   <link rel="stylesheet" type="text/css" href="css/ie.css" media="screen,projection" /> 
+  <![endif]-->
+ 
+  
+ </head>
+
+
+<body>
+  
+         <a name=0></a> 
+
+         <TABLE height="100%" cellSpacing=0 cellPadding=0 align=center bgColor=#333399 
+border=0>
+  <TBODY>
+   <TR>
+                    <a href="http://www.estadisticaparatodos.es"><img  src="../../i/logo.png" alt="Estadística para todos" border="0" class="center" /></a> 
+</TR>
+  
+  <TR>
+  
+  
+  <TD 
+    style="WIDTH: 12px; BACKGROUND-COLOR: #333399">&nbsp; 
+    </TD>
+    <TD>
+         
+         <TABLE height="100%" cellSpacing=0 cellPadding=0 bgColor=#fff6d8 border=0>
+                  <!--DWLayoutTable-->
+                  <TBODY>
+                    <TR>
+					
+					                
+                      
+      <TD width=545 rowspan="2">
+                    <H1 align="center"> Calculadora Combinatoria</H1>
+					                
+                          
+                        
+        <!-- INDICE -->
+   
+        <DIV class=contenido> 
+                            <OL style="MARGIN-LEFT: 60px">
+							 
+                            <li><A 
+                    href="#1">Binomio de Newton.</A> </li>
+                              <li><A 
+                    href="#2">Factorial 
+                                de un número.</A> </li>
+                              <li><A 
+                    href="#3">Variaciones.</A> </li>
+                              <li><A 
+                    href="#4">Variaciones 
+                                con repetición.</A> </li>
+                              <li><A 
+                    href="#5">Permutaciones.</A> </li>
+                              <li><A 
+                    href="#6">Permutaciones 
+                                con repetición.</A> </li>
+                              <li><A 
+                    href="#7">Combinaciones.</A> </li> 
+                              <li><A 
+                    href="#8">Combinaciones 
+                                con repetición.</A></li>
+                            </OL>
+                          </DIV>
+                          
+						  
+						  
+						  
+                        <!-- ITEM inicial -->
+                        <A 
+                  name=1 id="1"></A> 
+                        <H2> <a href="#0"><img src="../../i/subir2.gif" width="16" height="16" border="0" class="right"/></a> 
+                          1.- Binomio de Newton.</H2>
+						   <DIV class=contenido>
+                  <P>Calcula el binomio de Newton de exponente n <br />
+				  Script válido para un exponente <B><I>n menor o igual que 
+                  170</I></B></P>
+                
+                  <FORM>
+                  <TABLE width=200 align=center>
+                    <TBODY>
+                    <TR>
+                      <TD align=middle width=100><I>(a + b) <SUP>n</SUP></I> 
+                        <BR>
+                            <input type=radio checked value=0 name=sign /></TD>
+                      <TD align=middle width=100><I>(a - b) <SUP>n</SUP></I> 
+                        <BR><INPUT type=radio value=1 
+                  name=sign></TD></TR></TBODY></TABLE>
+                  <DIV align=center>n: <INPUT style="TEXT-ALIGN: center" 
+                  maxLength=3 size=2 name=exponente> <BR><BR><INPUT onclick=bNewton(this.form.exponente.value,this.form.sign) type=button value="Calcular el binomio"></DIV></FORM>
+
+                  <DIV align=center>
+                  <DIV id=binomio 
+                  style="BORDER-RIGHT: black 1px solid; PADDING-RIGHT: 10px; BORDER-TOP: black 1px solid; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; OVERFLOW: auto; BORDER-LEFT: black 1px solid; WIDTH: 475px; PADDING-TOP: 10px; BORDER-BOTTOM: black 1px solid; HEIGHT: 100px">
+				  </DIV></DIV></DIV>
+                <BR>
+                  
+						
+						    <!-- ITEM segundo -->
+                        <A 
+                  name=2 id="2"></A> 
+                        <H2> <a href="#0"><img src="../../i/subir2.gif" width="16" height="16" border="0" class="right"/></a> 
+                          2.- Factorial de <I>n</I>.</H2>
+                        
+                          <DIV class=contenido><B>Fórmula</B> : <I>n! = n.(n-1).(n-2)...3.2.1</I> 
+                            <BR>
+                            <BR>
+                            Limitaciones.- <I>n &lt;=170</I> (Mozilla) y n&lt; 
+                            95 (IE). Para valores superiores da "Infinity". <BR>
+                            <BR>
+                            <DIV align=center> 
+                              <FORM>
+                                <P><I>n</I> = 
+                                  <INPUT style="WIDTH: 50px; TEXT-ALIGN: center" 
+                  name=numero>
+                                </P>
+                                
+                      <P> 
+                        <input name="button" type=button onclick=eval(initFactorial) value="CALCULAR FACTORIAL" />
+                      </P>
+                                <P> 
+                                  <BUTTON type=reset>BORRAR</BUTTON>
+                                </P>
+                              </FORM>
+                              <P><B>Resultado: Factorial </B></P>
+                              <DIV class=resultado id=factorial style="WIDTH: 300px"></DIV>
+                              <P></P>
+                            </DIV>
+                          </DIV>
+                          <BR>
+                        <!-- ITEM medio -->
+                        <A 
+                  name=3 id="3"></A> 
+                        <H2> <a href="#0"><img src="../../i/subir2.gif" width="16" height="16" border="0" class="right"/></a> 
+                          3.- Variaciones de <I>m</I> elementos tomados de <I>n</I> 
+                          en <I>n</I>.</H2>
+                          
+                          <DIV class=contenido><BR>
+                            <P>Son las ordenaciones sin repetición de <I>m</I> 
+                              elementos de un conjunto tomadas de <I>n</I> en 
+                              <I>n</I></P>
+                            <P><B>Fórmula</B> : <I>V <SUB>m,n</SUB> = m.(m-1).(m-2)...(m-n+1)</I></P>
+                            <DIV align=center> 
+                              <FORM>
+                                <P><I>m</I> = 
+                                  <INPUT style="WIDTH: 50px; TEXT-ALIGN: center" 
+                  name=numelementos>
+                                  <I>n</I> = 
+                                  <INPUT 
+                  style="WIDTH: 50px; TEXT-ALIGN: center" name=numorden>
+                                </P>
+                                <P> 
+                                  <INPUT onclick=eval(initVariaciones) type=button value="CALCULAR VARIACIONES">
+                                </P>
+                                <P> 
+                                  <BUTTON type=reset>BORRAR</BUTTON>
+                                </P>
+                              </FORM>
+                              <P><B>Resultado: Número de variaciones </B></P>
+                              <DIV class=resultado id=variaciones 
+style="WIDTH: 300px"></DIV>
+                              <P></P>
+                            </DIV>
+                          </DIV>
+                          <BR>
+                     
+                          <BR>
+                        <!-- ITEM medio -->
+                        <A 
+                  name=4 id="4"></A> 
+                        <H2> <a href="#0"><img src="../../i/subir2.gif" width="16" height="16" border="0" class="right"/></a> 
+                          4.- Variaciones con Repetición de <I>m</I> elementos.</H2>
+                         
+                          <DIV class=contenido><BR>
+                            <P>Son las ordenaciones con repetición de <I>m</I> 
+                              elementos de un conjunto tomadas de <I>n</I> en 
+                              <I>n</I></P>
+                            <P><B>Fórmula</B> : <I>VR <SUB>m,n</SUB> = m <SUP>n</SUP></I></P>
+                            <DIV align=center> 
+                              <FORM>
+                                <P><I>m</I> = 
+                                  <INPUT style="WIDTH: 50px; TEXT-ALIGN: center" 
+                  name=numelementos>
+                                  <I>n</I> = 
+                                  <INPUT 
+                  style="WIDTH: 50px; TEXT-ALIGN: center" name=numorden>
+                                </P>
+                                
+                      <P> 
+                        <input name="button2" type=button onclick=eval(initVarRep) value="CALCULAR VARIACIONES CON REPETICIÓN" />
+                      </P>
+                                <P> 
+                                  <BUTTON type=reset>BORRAR</BUTTON>
+                                </P>
+                              </FORM>
+                              <P><B>Resultado: Número de variaciones con repetición</B></P>
+                              
+                    <DIV class=resultado id=variacionesrepeticion 
+                  style="WIDTH: 300px"></DIV>
+                              <P></P>
+                            </DIV>
+                          </DIV>
+                          <BR>
+                        <!-- ITEM medio -->
+                        <A 
+                  name=5 id="5"></A> 
+                        <H2> <a href="#0"><img src="../../i/subir2.gif" width="16" height="16" border="0" class="right"/></a> 
+                          5.- Permutaciones de <I>n</I> elementos.</H2>
+                         
+                          <DIV class=contenido><BR>
+                            <P>Son las variaciones de orden <I>n</I> formadas 
+                              con <I>n</I> elementos.</P>
+                            <P><B>Fórmula:</B> <I>P <SUB>n</SUB> = V <SUB>n,n</SUB> 
+                              = n!</I></P>
+                            <P> 
+                            
+                  <DIV align=center><A 
+                  href="#2">Se calculan con el FACTORIAL</A></DIV>
+                            <P></P>
+                          </DIV>
+                          <BR>
+                      
+                          <BR>
+                        <!-- ITEM medio -->
+                        <A 
+                  name=6 id="6"></A> 
+                        <H2> <a href="#0"><img src="../../i/subir2.gif" width="16" height="16" border="0" class="right"/></a> 
+                          6.- Permutaciones con Repetición de <I>m</I> elementos.</H2>
+                        
+                          <DIV class=contenido><BR>
+                            <P><I>PR <SUB>n</SUB> <SUP>a,b,c,...</SUP></I> son 
+                              las permutaciones con repetición de un conjunto 
+                              con <I>n</I> elementos, de los cuales uno de ellos 
+                              se repite <I>a</I> veces, otro <I>b</I> veces....... 
+                              con la condición de que <I>a + b + c + ... = n</I></P>
+                            <P><B>Fórmula</B> : <I>PR <SUB>n</SUB> <SUP>a,b,c,...</SUP></I> 
+                              = <I>P <SUB>n</SUB></I> : ( <I>a</I> ! <I>b</I> 
+                              ! <I>c</I> ! ...)</P>
+                            <DIV align=center> 
+                              <FORM>
+                                <P><I>n</I> = 
+                                  <INPUT style="WIDTH: 50px; TEXT-ALIGN: center" 
+                  name=numelementos>
+                                  <I>a,b,c,...</I> = 
+                                  <INPUT 
+                  style="WIDTH: 60px; TEXT-ALIGN: center" value=a,b... 
+                  name=numorden>
+                                </P>
+                                <P> 
+                                  <INPUT onclick=eval(initPerRep) type=button value="CALCULAR PERMUTACIONES CON REPETICIÓN">
+                                </P>
+                                <P> 
+                                  <BUTTON type=reset>BORRAR</BUTTON>
+                                </P>
+                              </FORM>
+                              <P><B>Resultado: Número de Permutaciones con repetición</B></P>
+                              <DIV class=resultado id=permutacionesrepeticion 
+                  style="WIDTH: 300px"></DIV>
+                              <P></P>
+                            </DIV>
+                          </DIV>
+                          <BR>
+                        <!-- ITEM medio -->
+                        <A 
+                  name=7 id="7"></A> 
+                        <H2> <a href="#0"><img src="../../i/subir2.gif" width="16" height="16" border="0" class="right"/></a> 
+                          7.- Combinaciones de <I>m</I> elementos tomados de <I>n</I> 
+                          en <I>n</I>.</H2>
+                          <DIV class=contenido><BR>
+                            <P>Dados <I>m</I> elementos, <I>a <SUB>1</SUB>, a 
+                              <SUB>2</SUB>, a <SUB>3</SUB>,... a <SUB>m</SUB></I>, 
+                              se llama <I>combinación n-aria</I>, o de <I>orden 
+                              n</I>, a los conjuntos formados por <I>n</I> elementos 
+                              elegidos entre ellos, de modo que dos conjuntos 
+                              cualesquiera difieran en algún elemento.</P>
+                            <P><B>Fórmula</B> : <I>C <SUB>m,n</SUB></I> = <I>V 
+                              <SUB>m,n</SUB></I> : <I>P <SUB>n</SUB></I></P>
+                            <DIV align=center> 
+                              <FORM>
+                                <P><I>m</I> = 
+                                  <INPUT style="WIDTH: 50px; TEXT-ALIGN: center" 
+                  name=numelementos>
+                                  <I>n</I> = 
+                                  <INPUT 
+                  style="WIDTH: 50px; TEXT-ALIGN: center" name=numorden>
+                                </P>
+                                <P> 
+                                  <INPUT onclick=eval(initCombinaciones) type=button value="CALCULAR COMBINACIONES">
+                                </P>
+                                <P> 
+                                  <BUTTON type=reset>BORRAR</BUTTON>
+                                </P>
+                              </FORM>
+                              <P><B>Resultado: Número de combinaciones </B></P>
+                              <DIV class=resultado id=combinaciones 
+                  style="WIDTH: 300px"></DIV>
+                              <P></P>
+                            </DIV>
+                          </DIV>
+                          <BR>
+                        <!-- ITEM final -->
+                        <A 
+                  name=8 id="8"></A> 
+                        <H2> <a href="#0"><img src="../../i/subir2.gif" width="16" height="16" border="0" class="right"/></a> 
+                          8.- Combinaciones con repetición de <I>m</I> elementos.</H2>
+                         <DIV class=contenido><BR>
+                            <P>Son aquellas combinaciones cuyos elementos pueden 
+                              repetirse</P>
+                            <P><B>Fórmula</B> : <I>CR <SUB>m,n</SUB></I> = <I>C 
+                              <SUB>(m+n-1),n</SUB></I></P>
+                            <DIV align=center> 
+                              <FORM>
+                                <P><I>m</I> = 
+                                  <INPUT style="WIDTH: 50px; TEXT-ALIGN: center" 
+                  name=numelementos>
+                                  <I>n</I> = 
+                                  <INPUT 
+                  style="WIDTH: 50px; TEXT-ALIGN: center" name=numorden>
+                                </P>
+                                <P> 
+                                  <INPUT onclick=eval(initComRep) type=button value="CALCULAR COMBINACIONES CON REPETICION">
+                                </P>
+                                <P> 
+                                  <BUTTON type=reset>BORRAR</BUTTON>
+                                </P>
+                              </FORM>
+                              <P><B>Resultado: Número de Combinaciones con repetición 
+                                </B></P>
+                              <DIV class=resultado id=combinacionesrepeticion 
+                  style="WIDTH: 300px"></DIV>
+                              
+                            </DIV>
+                          </DIV>
+                     <BR>   <BR>
+                 </TD></TR>
+        </TBODY></TABLE></TD>
+		
+		
+    <TD style=" WIDTH: 12px; BACKGROUND-COLOR: #333399">&nbsp; </TD>
+	
+	
+	</TR></TBODY></TABLE>
+         <br />       
+	</body>
+	</html>

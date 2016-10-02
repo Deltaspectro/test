@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="UTF-8">
     <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    
-    <a class="btn btn-xs btn-danger" href="#" id="new-window" role="button">Mostrar datos</a>
-    
-    <!-- All of the Node.js APIs are available in this renderer process. -->
-   
-  </body>
+</head>
 
-  <script>
+<body>
+    <h1>Hello World!</h1>
+    <a class="btn btn-xs btn-danger" href="#" id="new-window" role="button">Mostrar datos</a>
+
+    <button type="button" id="select-directory" class="btn btn-xs btn-warning">abrir archivo</button>
+
+
+    <!-- All of the Node.js APIs are available in this renderer process. -->
+    <div id="demo">
+        <!--Aca se van a presentar los datos guardados-->
+    </div>
+
+</body>
+
+<script>
     // You can also require other files to run in this process
     require('./renderer.js')
-  </script>
+</script>
+
 </html>

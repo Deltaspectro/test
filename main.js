@@ -7,6 +7,20 @@ const BrowserWindow = electron.BrowserWindow
 // Libreria para personalizar el menu de la aplicasion
 const {Menu} = require('electron')
 
+const ipc = require('electron').ipcMain
+const dialog = require('electron').dialog
+
+ipc.on('open-file-dialog', function (event) {
+  dialog.showOpenDialog({
+    filters: [
+    {name: 'Probabilist', extensions: ['.pbts']}],
+    properties: ['openFile','openDirectory']  
+
+}, function (files) {
+    if (files) event.sender.send('selected-directory', files)
+  })
+})
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
